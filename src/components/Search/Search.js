@@ -11,7 +11,16 @@ class Search extends Component {
 
 	onSubmit = (event) => {
 		event.preventDefault();
-		console.log(this.state.text);
+
+		// if user searches for empty string
+		if (this.state.text === "") {
+			this.props.setAlert("Please enter something in the search field . . .");
+		} else {
+			// console.log(this.state.text);
+			// passing the props up to the app component to centralize data
+			this.props.searchUsers(this.state.text);
+			this.setState({ text: "" });
+		}
 	};
 
 	render() {
@@ -35,6 +44,7 @@ class Search extends Component {
 							type="button"
 							value="Clear results"
 							className="btn btn-light btn-block"
+							onClick={this.props.clearUsers}
 						/>
 					</div>
 				</form>
