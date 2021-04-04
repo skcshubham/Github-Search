@@ -3,8 +3,8 @@
 /* Global Styles */
 :root {
 	--primary-color: #757ce8;
-	--dark-color: #333333;
-	--light-color: #f4f4f4;
+	--dark-color: #4d4d4d;
+	--light-color: #d4d4d4;
 	--danger-color: #dc3545;
 	--success-color: #28a745;
 }
@@ -217,7 +217,7 @@ img {
 
 .btn-block {
 	display: block;
-	width: 100%;
+	width: 50%;
 }
 
 .btn-sm {
@@ -295,7 +295,8 @@ img {
 }
 
 .btn:hover {
-	opacity: 0.8;
+	opacity: 0.9;
+	color: rgb(255, 255, 255);
 }
 
 .bg-light,

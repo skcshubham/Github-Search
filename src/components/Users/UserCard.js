@@ -13,7 +13,7 @@ const UserCard = (props) => {
 			/>
 			<h3>{login}</h3>
 			<div>
-				<a href={html_url} className="btn btn-dark btn-sm my-1" alt={login}>
+				<a href={html_url} className="btn btn-primary btn-sm my-1" alt={login}>
 					More here
 				</a>
 			</div>
