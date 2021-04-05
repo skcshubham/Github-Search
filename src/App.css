@@ -355,8 +355,7 @@ table th {
 	padding: 0.7rem 2rem;
 	z-index: 1;
 	width: 100%;
-	word-spacing: 0.1rem;
-	letter-spacing: 2px;
+	letter-spacing: 1px;
 	opacity: 0.8;
 	margin-bottom: 2rem;
 }

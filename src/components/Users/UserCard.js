@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const UserCard = (props) => {
 	// destructure the attributes of the object for redundancy reduction
-	const { login, avatar_url, html_url } = props.user;
+	const { login, avatar_url } = props.user;
 	return (
 		<div className="card text-center">
 			<img
@@ -13,9 +14,13 @@ const UserCard = (props) => {
 			/>
 			<h3>{login}</h3>
 			<div>
-				<a href={html_url} className="btn btn-primary btn-sm my-1" alt={login}>
-					More here
-				</a>
+				<Link
+					to={`/user/${login}`}
+					className="btn btn-primary btn-sm my-1"
+					alt={login}
+				>
+					Details
+				</Link>
 			</div>
 		</div>
 	);
