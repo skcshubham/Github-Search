@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import Spinner from "../Spinner/Spinner";
+import UserRepo from "../UserRepoData/UserRepo";
 import { Link } from "react-router-dom";
 
 class UserData extends Component {
 	componentDidMount() {
 		this.props.getUser(this.props.match.params.login);
+		this.props.getUserRepos(this.props.match.params.login);
 	}
 
 	render() {
@@ -53,15 +55,19 @@ class UserData extends Component {
 						<div>
 							<h3>Bio:</h3>
 							{bio === null ? (
-								"Not Provided"
+								<>
+									<span>Not Provided</span>
+									<br />
+								</>
 							) : (
 								<React.Fragment>
 									<p>{bio}</p>
 								</React.Fragment>
 							)}
+
 							<a
 								href={html_url}
-								className="btn btn-dark m-1"
+								className="btn btn-dark my"
 								target="_blank"
 								rel="noreferrer"
 							>
@@ -84,7 +90,7 @@ class UserData extends Component {
 										<strong>{company}</strong>
 									</React.Fragment>
 								) : (
-									"doesn't work at any company"
+									"doesn't work currently."
 								)}
 							</li>
 						</div>
@@ -103,6 +109,7 @@ class UserData extends Component {
 							Public gists : {public_gists}
 						</badge>
 					</div>
+					<UserRepo repos={this.props.repos} />
 				</React.Fragment>
 			);
 		}

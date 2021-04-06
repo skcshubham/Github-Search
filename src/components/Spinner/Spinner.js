@@ -1,5 +1,5 @@
 import React from "react";
-import spinner from "./spinner.gif";
+import spinner from "./newSpinner.gif";
 
 const Spinner = () => {
 	return (
@@ -8,12 +8,11 @@ const Spinner = () => {
 				src={spinner}
 				alt="Loading..."
 				style={{
-					width: "200px",
+					width: "50px",
 					position: "absolute",
-					top: "45%",
+					top: "52%",
 					left: "50%",
-					marginTop: "-50px",
-					marginLeft: "-100px",
+					marginLeft: "-25px",
 				}}
 			/>
 		</React.Fragment>
