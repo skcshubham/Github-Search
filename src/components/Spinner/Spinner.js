@@ -11,7 +11,7 @@ const Spinner = () => {
 					width: "50px",
 					position: "absolute",
 					top: "51%",
-					left: "50%",
+					left: "48%",
 					marginLeft: "-25px",
 				}}
 			/>
