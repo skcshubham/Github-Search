@@ -18,6 +18,7 @@ class App extends Component {
 		alert: null,
 	};
 
+	// loading default github user data on screen load
 	componentDidMount() {
 		this.setState({ loading: true });
 		axios
@@ -29,6 +30,7 @@ class App extends Component {
 				const updateState = () => {
 					this.setState({ users: response.data, loading: false });
 				};
+				// updates state after 2 secs to show loader spinner
 				setTimeout(function () {
 					updateState();
 				}, 2000);

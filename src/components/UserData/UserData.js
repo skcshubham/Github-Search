@@ -49,7 +49,7 @@ class UserData extends Component {
 								alt={name}
 								style={{ width: "180px" }}
 							/>
-							<h1>{name}</h1>
+							<h1>{name !== null && name !== undefined ? name : login}</h1>
 							<p>Location : {location === null ? "Not Provided" : location}</p>
 						</div>
 						<div>
@@ -71,7 +71,11 @@ class UserData extends Component {
 								target="_blank"
 								rel="noreferrer"
 							>
-								visit {name}'s github
+								visit{" "}
+								{name !== null && name !== undefined
+									? name.split(" ")[0]
+									: login}
+								's github
 							</a>
 							<li>
 								<strong>USERNAME : </strong>
