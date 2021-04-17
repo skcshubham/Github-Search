@@ -10,7 +10,7 @@ const Spinner = () => {
 				style={{
 					width: "50px",
 					position: "absolute",
-					top: "50%",
+					top: "51%",
 					left: "50%",
 					marginLeft: "-25px",
 				}}
