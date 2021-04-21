@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import Spinner from "../Spinner/Spinner";
 import UserRepo from "../UserRepoData/UserRepo";
 import { Link } from "react-router-dom";
 
-class UserData extends Component {
+class UserData extends React.Component {
 	componentDidMount() {
 		this.props.getUser(this.props.match.params.login);
 		this.props.getUserRepos(this.props.match.params.login);

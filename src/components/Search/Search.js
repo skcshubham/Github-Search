@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Search extends Component {
+class Search extends React.Component {
 	state = {
 		text: "",
 	};

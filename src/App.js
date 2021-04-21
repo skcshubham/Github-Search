@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import UserList from "./components/Users/UserList";
@@ -9,7 +9,7 @@ import UserData from "./components/UserData/UserData";
 import axios from "axios";
 import "./App.css";
 
-class App extends Component {
+class App extends React.Component {
 	state = {
 		users: [],
 		user: {},
