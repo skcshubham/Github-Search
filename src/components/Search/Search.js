@@ -1,56 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 
-class Search extends React.Component {
-	state = {
-		text: "",
+const Search = (props) => {
+	const [text, setText] = useState("");
+
+	const onChange = (event) => {
+		setText(event.target.value);
 	};
 
-	onChange = (event) => {
-		this.setState({ [event.target.name]: event.target.value });
-	};
-
-	onSubmit = (event) => {
+	const onSubmit = (event) => {
 		event.preventDefault();
 
 		// if user searches for empty string
-		if (this.state.text === "") {
-			this.props.setAlert("Please enter something in the search field . . .");
+		if (text === "") {
+			props.setAlert("Please enter something in the search field . . .");
 		} else {
-			// console.log(this.state.text);
+			// console.log(text);
 			// passing the props up to the app component to centralize data
-			this.props.searchUsers(this.state.text);
-			this.setState({ text: "" });
+			props.searchUsers(text);
+			setText("");
 		}
 	};
 
-	render() {
-		return (
-			<div>
-				<form onSubmit={this.onSubmit} className="form">
+	return (
+		<div>
+			<form onSubmit={onSubmit} className="form">
+				<input
+					type="text"
+					name="text"
+					placeholder="Search Users..."
+					onChange={onChange}
+					value={text}
+				/>
+				<div style={{ display: "flex" }}>
 					<input
-						type="text"
-						name="text"
-						placeholder="Search Users..."
-						onChange={this.onChange}
-						value={this.state.text}
+						type="submit"
+						value="Search"
+						className="btn btn-dark btn-block"
 					/>
-					<div style={{ display: "flex" }}>
-						<input
-							type="submit"
-							value="Search"
-							className="btn btn-dark btn-block"
-						/>
-						<input
-							type="button"
-							value="Clear results"
-							className="btn btn-light btn-block"
-							onClick={this.props.clearUsers}
-						/>
-					</div>
-				</form>
-			</div>
-		);
-	}
-}
+					<input
+						type="button"
+						value="Clear results"
+						className="btn btn-light btn-block"
+						onClick={props.clearUsers}
+					/>
+				</div>
+			</form>
+		</div>
+	);
+};
 
 export default Search;
