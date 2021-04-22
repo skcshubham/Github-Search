@@ -36,7 +36,9 @@ const App = (props) => {
 			.then((response) => {
 				// console.log(response.data);
 				const updateState = () => {
-					setState({ users: response.data, loading: false });
+					// setState({ users: response.data, loading: false });
+					setUsers(response.data);
+					setLoading(false);
 				};
 				// updates state after 2 secs to show loader spinner
 				setTimeout(function () {
