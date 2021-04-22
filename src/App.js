@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import UserList from "./components/Users/UserList";
@@ -9,18 +9,26 @@ import UserData from "./components/UserData/UserData";
 import axios from "axios";
 import "./App.css";
 
-class App extends React.Component {
-	state = {
+const App = (props) => {
+	const [users, setUsers] = useState([]);
+	const [user, setUser] = useState({});
+	const [repos, setRepos] = useState([]);
+	const [loading, setLoading] = useState(false);
+	const [alert, setAlert] = useState(null);
+
+	/* state = {
 		users: [],
 		user: {},
 		repos: [],
 		loading: false,
 		alert: null,
-	};
+	}; */
 
 	// loading default github user data on screen load
-	componentDidMount() {
-		this.setState({ loading: true });
+	useEffect(() => {
+		// setState({ loading: true });
+		setLoading(true);
+
 		axios
 			.get(
 				`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
@@ -28,7 +36,7 @@ class App extends React.Component {
 			.then((response) => {
 				// console.log(response.data);
 				const updateState = () => {
-					this.setState({ users: response.data, loading: false });
+					setState({ users: response.data, loading: false });
 				};
 				// updates state after 2 secs to show loader spinner
 				setTimeout(function () {
@@ -38,12 +46,13 @@ class App extends React.Component {
 			.catch((error) => {
 				console.log(error);
 			});
-	}
+	}, []);
 
 	// search Github Users
-	searchUsers = (text) => {
+	const searchUsers = (text) => {
 		// console.log(text);
-		this.setState({ loading: true });
+		// setState({ loading: true });
+		setLoading(true);
 		axios
 			.get(
 				`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
@@ -51,7 +60,9 @@ class App extends React.Component {
 			.then((response) => {
 				// console.log(response.data);
 				const updateState = () => {
-					this.setState({ users: response.data.items, loading: false });
+					// setState({ users: response.data.items, loading: false });
+					setUsers(response.data.items);
+					setLoading(false);
 				};
 				setTimeout(function () {
 					updateState();
@@ -62,20 +73,24 @@ class App extends React.Component {
 			});
 	};
 
-	// clear users from state
-	clearUsers = () => {
-		this.setState({ users: [], loading: false });
+	// clear users from state when clear button is pressed
+	const clearUsers = () => {
+		// setState({ users: [], loading: false });
+		setUsers([]);
+		setLoading(false);
 	};
 
 	// error checking for empty string search
-	setAlert = (msg) => {
-		this.setState({ alert: msg });
-		setTimeout(() => this.setState({ alert: null }), 2000);
+	const showAlert = (msg) => {
+		// setState({ alert: msg });
+		setAlert(msg);
+		setTimeout(() => setAlert(null), 2000);
 	};
 
 	// get single user data
-	getUser = (username) => {
-		this.setState({ loading: true });
+	const getUser = (username) => {
+		// setState({ loading: true });
+		setLoading(true);
 		axios
 			.get(
 				`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
@@ -83,7 +98,9 @@ class App extends React.Component {
 			.then((response) => {
 				// console.log(response.data);
 				const updateState = () => {
-					this.setState({ user: response.data, loading: false });
+					// setState({ user: response.data, loading: false });
+					setUser(response.data);
+					setLoading(false);
 				};
 				setTimeout(function () {
 					updateState();
@@ -95,58 +112,57 @@ class App extends React.Component {
 	};
 
 	// get user's repository details
-	getUserRepos = (username) => {
+	const getUserRepos = (username) => {
 		axios
 			.get(
 				`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
 			)
 			.then((response) => {
 				// console.log(response.data);
-				this.setState({ repos: response.data });
+				// setState({ repos: response.data });
+				setRepos(response.data);
 			})
 			.catch((error) => {
 				console.log(error);
 			});
 	};
 
-	render() {
-		return (
-			<BrowserRouter>
-				<Navbar />
-				<div className="container">
-					<Alert alert={this.state.alert} />
-					<Switch>
-						<Route exact path="/">
-							<Search
-								searchUsers={this.searchUsers}
-								clearUsers={this.clearUsers}
-								showClearButton={this.state.users.length > 0 ? true : false}
-								setAlert={this.setAlert}
+	return (
+		<BrowserRouter>
+			<Navbar />
+			<div className="container">
+				<Alert alert={alert} />
+				<Switch>
+					<Route exact path="/">
+						<Search
+							searchUsers={searchUsers}
+							clearUsers={clearUsers}
+							showClearButton={users.length > 0 ? true : false}
+							setAlert={showAlert}
+						/>
+						<UserList loading={loading} users={users} />
+					</Route>
+					<Route exact path="/about">
+						<About />
+					</Route>
+					<Route
+						exact
+						path="/user/:login"
+						render={(props) => (
+							<UserData
+								{...props}
+								getUser={getUser}
+								getUserRepos={getUserRepos}
+								user={user}
+								repos={repos}
+								loading={loading}
 							/>
-							<UserList loading={this.state.loading} users={this.state.users} />
-						</Route>
-						<Route exact path="/about">
-							<About />
-						</Route>
-						<Route
-							exact
-							path="/user/:login"
-							render={(props) => (
-								<UserData
-									{...props}
-									getUser={this.getUser}
-									getUserRepos={this.getUserRepos}
-									user={this.state.user}
-									repos={this.state.repos}
-									loading={this.state.loading}
-								/>
-							)}
-						></Route>
-					</Switch>
-				</div>
-			</BrowserRouter>
-		);
-	}
-}
+						)}
+					></Route>
+				</Switch>
+			</div>
+		</BrowserRouter>
+	);
+};
 
 export default App;
