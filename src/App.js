@@ -28,7 +28,6 @@ const App = (props) => {
 	useEffect(() => {
 		// setState({ loading: true });
 		setLoading(true);
-
 		axios
 			.get(
 				`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
@@ -86,6 +85,7 @@ const App = (props) => {
 	const showAlert = (msg) => {
 		// setState({ alert: msg });
 		setAlert(msg);
+		// remove alert after 2 secs
 		setTimeout(() => setAlert(null), 2000);
 	};
 
