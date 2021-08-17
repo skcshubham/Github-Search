@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const Search = (props) => {
+	// searchbar text
 	const [text, setText] = useState("");
 
 	const onChange = (event) => {

@@ -139,7 +139,6 @@ const App = (props) => {
 						<Search
 							searchUsers={searchUsers}
 							clearUsers={clearUsers}
-							showClearButton={users.length > 0 ? true : false}
 							setAlert={showAlert}
 						/>
 						<UserList loading={loading} users={users} />
